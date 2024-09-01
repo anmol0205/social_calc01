@@ -7,44 +7,41 @@ import TableIdContext from '../Context/Table/TableIdContext';
 const Create = () => {
   const { table, update } = useContext(TableContext);
   const [col_no, setColNo] = useState(0);
-  const [fields, setFields] = useState([]);
+  // const [fields, setFields] = useState([]);
   const TableId = useContext(TableIdContext);
   const socket = useSocket();
   const navigate = useNavigate();
 
-  const handleInputChange = (index, event) => {
-    const newFields = [...fields];
-    newFields[index] = event.target.value;
-    setFields(newFields);
-  };
+  // const handleInputChange = (index, event) => {
+  //   const newFields = [...fields];
+  //   newFields[index] = event.target.value;
+  //   setFields(newFields);
+  // };
 
-  const click = () => {
-    const newFields = Array(col_no).fill('');
-    setFields(newFields);
-  };
+  // const click = () => {
+  //   const newFields = Array(col_no).fill('');
+  //   setFields(newFields);
+  // };
 
   const handleButtonClick = () => {
     navigate(`/Doc/${TableId.Id}`);
   };
 
   const saveData = () => {
-    const updatedTable = [];
-    updatedTable.push(fields);
-    update(updatedTable);
     socket.emit("join", { table, roomId: TableId.Id });
-    console.log('Updated table with fields:', fields);
+    console.log('Updated table with fields:', table);
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.box}>
-        <div style={styles.title}>Enter the number of columns:</div>
-        <input
+        <div style={styles.title}></div>
+        {/* <input
           type="number"
           value={col_no}
           onChange={(e) => setColNo(Number(e.target.value))}
           style={styles.input}
-        />
+        /> */}
         <div style={styles.inputGroup}>
           <label htmlFor="tableId" style={styles.label}>ID</label>
           <input
@@ -54,9 +51,9 @@ const Create = () => {
             style={styles.input}
           />
         </div>
-        <button onClick={click} style={styles.createButton}>Create</button>
+        {/* <button onClick={click} style={styles.createButton}>Create</button> */}
 
-        <div style={styles.inputContainer}>
+        {/* <div style={styles.inputContainer}>
           {fields.map((field, index) => (
             <input
               key={index}
@@ -67,7 +64,7 @@ const Create = () => {
               style={styles.input}
             />
           ))}
-        </div>
+        </div> */}
 
         <button onClick={saveData} style={styles.saveButton}>Save</button>
         <button onClick={handleButtonClick} style={styles.goButton}>GO</button>

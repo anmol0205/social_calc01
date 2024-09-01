@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import TableContext from "./TableContext";
 
 const TableState = (props) => {
-  const [table, setTable] = useState([]);
+  const createEmptyMatrix = (rows, cols) => {
+    return Array.from({ length: rows }, () => Array(cols).fill(''));
+  };
+  
+  const [table, setTable] = useState(createEmptyMatrix(15,15));
 
   const update = (field) => {
     setTimeout(() => {

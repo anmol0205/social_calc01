@@ -40,31 +40,33 @@ const Doc = () => {
     }
   }, [Socket]);
 
-  const addRow = () => {
-    console.log('hear');
-    const emptyRow = Array(updatedTable[0].length).fill('');
-    const newTable = [...updatedTable, emptyRow];
+  // const addRow = () => {
+  //   console.log('hear');
+  //   const emptyRow = Array(updatedTable[0].length).fill('');
+  //   const newTable = [...updatedTable, emptyRow];
 
-    setupdatedTable(newTable);
-    Socket.emit('commit', { table: newTable, Id });
-  };
+  //   setupdatedTable(newTable);
+  //   Socket.emit('commit', { table: newTable, Id });
+  // };
 
-  const deleteRow = (rowIndex) => {
-    if (updatedTable.length > 1 && rowIndex > 0) {
-      const newTable = updatedTable.filter((_, index) => index !== rowIndex);
+  // const deleteRow = (rowIndex) => {
+  //   if (updatedTable.length > 1 && rowIndex > 0) {
+  //     const newTable = updatedTable.filter((_, index) => index !== rowIndex);
 
-      setupdatedTable(newTable);
-      Socket.emit('commit', { table: newTable, Id });
-    }
-  };
+  //     setupdatedTable(newTable);
+  //     Socket.emit('commit', { table: newTable, Id });
+  //   }
+  // };
 
   const handleInputChange = (rowIndex, colIndex, event) => {
+    console.log(rowIndex, colIndex, event.target.value);
     const value = event.target.value;
     const newTable = updatedTable.map((row, rIdx) =>
       row.map((cell, cIdx) =>
         rIdx === rowIndex && cIdx === colIndex ? value : cell
       )
     );
+    console.log(newTable);
 
     setupdatedTable(newTable);
     Socket.emit('commit', { table: newTable, Id });
@@ -77,46 +79,36 @@ const Doc = () => {
   return (
     <div style={styles.container}>
       <table style={styles.table}>
-        <thead>
-          <tr>
-            {updatedTable[0].map((header, colIndex) => (
-              <th key={colIndex} style={styles.headerCell}>
-                {header}
-              </th>
-            ))}
-            <th style={styles.headerCell}>Actions</th>
-          </tr>
-        </thead>
+        
         <tbody>
-          {updatedTable.slice(1).map((row, rowIndex) => (
+          {updatedTable.map((row, rowIndex) => (
             <tr key={rowIndex} style={styles.row}>
               {row.map((cell, colIndex) => (
                 <td key={colIndex} style={styles.cell}>
                   <input
                     type="text"
                     value={cell}
-                    placeholder={`Column ${colIndex + 1}`}
-                    onChange={(e) => handleInputChange(rowIndex + 1, colIndex, e)}
+                    onChange={(e) => handleInputChange(rowIndex , colIndex, e)}
                     style={styles.input}
                   />
                 </td>
               ))}
-              <td style={styles.cell}>
+              {/* <td style={styles.cell}>
                 <button
                   onClick={() => deleteRow(rowIndex + 1)}
                   style={styles.deleteButton}
                 >
                   Delete
                 </button>
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>
       </table>
 
-      <div style={styles.buttonContainer}>
+      {/* <div style={styles.buttonContainer}>
         <button onClick={addRow} style={styles.addButton}>Add Row</button>
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -129,35 +121,32 @@ const styles = {
     height:'100vh',
     background: 'linear-gradient(135deg, #1c1c1c, #282828)',
     padding: '30px',
-    borderRadius: '12px',
     boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)',
     fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
   },
   table: {
     borderCollapse: 'collapse',
-    width: '100%',
-    maxWidth: '900px',
+    width:'fit',
     marginBottom: '30px',
     backgroundColor: '#2b2b2b',
-    borderRadius: '10px',
     overflow: 'hidden',
     boxShadow: '0 6px 12px rgba(0, 0, 0, 0.2)',
   },
-  headerCell: {
-    padding: '16px',
-    backgroundColor: '#444444',
-    color: '#ffffff',
-    textAlign: 'center',
-    fontSize: '18px',
-    fontWeight: '600',
-    borderBottom: '2px solid #555555',
-    position: 'sticky',
-    top: 0,
-    zIndex: 1,
-  },
+  // headerCell: {
+  //   padding: '16px',
+  //   backgroundColor: '#444444',
+  //   color: '#ffffff',
+  //   textAlign: 'center',
+  //   fontSize: '18px',
+  //   fontWeight: '600',
+  //   borderBottom: '2px solid #555555',
+  //   position: 'sticky',
+  //   top: 0,
+  //   zIndex: 1,
+  // },
   cell: {
-    padding: '12px',
-    borderBottom: '1px solid #333333',
+    width:'120px',
+    border:'2px solid white',
     textAlign: 'center',
     backgroundColor: '#3b3b3b',
   },
