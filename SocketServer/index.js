@@ -1,7 +1,7 @@
 const { Server } = require('socket.io');
 const io = new Server(8000, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://social-calc01.onrender.com',
     methods: ['GET', 'POST'],
   },
 });

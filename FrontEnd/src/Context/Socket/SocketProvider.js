@@ -10,7 +10,7 @@ export const useSocket = () => {
 };
 
 export const SocketProvider = (props) => {
-  const socket = useMemo(() => io('localhost:8000'), []);
+  const socket = useMemo(() => io('https://social-calc01.onrender.com'), []);
   
   return (
     <SocketContext.Provider value={socket}>
