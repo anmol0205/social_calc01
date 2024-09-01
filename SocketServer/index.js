@@ -1,8 +1,7 @@
 const { Server } = require('socket.io');
 const io = new Server(8000, {
   cors: {
-    origin: 'https://social-calc-seven.vercel.app/',
-    methods: ['GET', 'POST'],
+    origin: 'https://social-calc-seven.vercel.app'
   },
 });
 
